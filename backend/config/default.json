@@ -1,0 +1,6 @@
+{
+    "jwtKeyToken": "theSecrets",
+    "route":"/api",
+    "JWT_EXPIRATION_SECONDS": 3
+  }
+  

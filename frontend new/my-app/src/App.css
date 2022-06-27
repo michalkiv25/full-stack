@@ -1,0 +1,12 @@
+.App {
+  text-align: center;
+}
+
+
+/* comp ListTable */
+p.center{
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

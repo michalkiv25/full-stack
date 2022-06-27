@@ -1,0 +1,32 @@
+{
+  "name": "node",
+  "version": "1.0.0",
+  "description": "Full stack",
+  "main": "app.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "keywords": [],
+  "author": "Michaela <michalkiv20@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "bcrypt": "^5.0.1",
+    "chalk": "^5.0.1",
+    "config": "^3.3.7",
+    "cors": "^2.8.5",
+    "debug": "^4.3.4",
+    "express": "^4.17.3",
+    "express-validation": "^4.1.0",
+    "helmet": "^5.1.0",
+    "http-status": "^1.5.2",
+    "joi": "^17.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
+    "mongoose": "^6.2.5",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.4",
+    "uuid": "^8.3.2"
+  }
+}
