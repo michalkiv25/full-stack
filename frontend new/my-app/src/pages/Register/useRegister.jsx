@@ -1,15 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState,useContext } from 'react';
 import validate from './validate';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom'; //In react-router-dom v6 useHistory() is replaced by useNavigate().
-
+import { AuthContext } from '../../context/auth-context';
 
 //Manages the state of the Register- Custom input
 
 toast.configure() //notification error form input
 const useRegister = ()=>{
+  const auth = useContext(AuthContext);
   const navigate = useNavigate(); // const history = useHistory();
     const URL= "http://localhost:3000/api/register/add";
     const [errors, setErrors] = useState({});
@@ -50,6 +51,7 @@ const useRegister = ()=>{
 
       const registerPost= async ()=>{
         const data  = await axios.post(URL, addRegister);
+        auth.login(data.data._id);
         if(!data) {
           return
         }else{

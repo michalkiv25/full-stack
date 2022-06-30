@@ -25,7 +25,7 @@ exports.getOneRowTable=  async (req,res,next)=>{  //Get One row table
 }
 
 exports.tablePost =  async (req,res,next)=>{ 
-    const { path: image } = req.file;
+    // const { path: image } = req.file;
     const {firstName, LastName, email, gender, status, nameCreate} = req.body; //Distraction parametrs of table user
     
     //Lets Validate 
@@ -55,8 +55,8 @@ exports.tablePost =  async (req,res,next)=>{
         email,
         gender,
         status,
-        // image : image.replace('\\','/') //Not to be saved with 2 slashers, usually in windows
-        image: req.file.image,
+        // image : image.replace('\\','/'), //Not to be saved with 2 slashers, usually in windows
+        // image: req.file.image,
         nameCreate
     })
     try{

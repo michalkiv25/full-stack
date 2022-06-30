@@ -1,7 +1,5 @@
 import { useReducer } from 'react';
 
-
-
 const initialInputState = { //start state
   value: '',
   isTouched: false,

@@ -3,8 +3,7 @@ import { toPx } from '../../helpers';
 
 const Root = styled.div`
   width: 100%;
-  padding-right: 1rem;
-  padding-left: 1rem;
+  padding:  ${(p) => toPx(p.theme.spacing * 1)} ;
   margin: 20px auto;
 
   @media (min-width: ${(p) => toPx(p.theme.breakpoints.sm)}) {

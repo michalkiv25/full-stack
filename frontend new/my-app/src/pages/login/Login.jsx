@@ -96,7 +96,6 @@ function Login() {
   const passwordClasses = emailHasError ? 'form-control invalid' : 'form-control';
 
   return (
-
     <form onSubmit={submitHandler}>
       <div className='control-group'>
         <div className={firstNameClasses} >

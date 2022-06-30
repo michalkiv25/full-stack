@@ -44,7 +44,7 @@ function Register() {
         </div>
 
         <div className="d-grid gap-2 col-4 mx-auto">
-          <button  className="btn btn-outline-secondary" disabled={errors.length >= 1} type='submit' >Sing-In</button>
+          <button className="btn btn-outline-secondary" disabled={errors.length >= 1} type='submit' >Sing-In</button>
         </div>
     </form>
 </div>

@@ -1,37 +1,40 @@
 import React,{useState} from 'react';
-// import from project
+import { CSSTransition } from 'react-transition-group';
+
 import ItemTable from './ItemTable';
 import '../../App.css';
-import Modal from '../../pages/Modal';
-import E from './ListTable.style';
+import Modalsec from '../../components/Modalsec';
+import { ModalMain } from '../../components';
+import { Button } from './../../components';
 
 
 function ListTable({allRow,setAllRow}) {
     const [modalEdit,setmodalEdit] = useState(false);
     const [modalAddPost,setmodalAddPost] = useState(false);
-    const [descriptionButton,setDescriptionButton] = useState('Add Row');
-    const [descriptionButtonInternal, setDescriptionButtonInternal]= useState('Post');
-    const [fetch_api,setfetch_api]= useState()
+    const [descriptionButtonInternal, setDescriptionButtonInternal]= useState('Add');
+    const [fetch_api,setfetch_api]= useState('POST')
 
     const [obgRowTable,setObgRowTable] = useState({}) //objEdit
 
-    if(!allRow ){ // .length ===0
-        return <p className='center'>No table found</p>
+    if(!allRow ){ // allRow.length ===0
+        return(
+            <>
+                <p className='center'>No table found</p>
+                <Button to="/">Share Place</Button>
+            </>
+        )
     }
 
-
-// all funciotn
-    const hendelToggle= ()=>{
-        setmodalAddPost((prev)=>!prev)
-        if (descriptionButton === 'Add Row'){
-            setDescriptionButton('Cencel');
-        }else {
-            setDescriptionButton('Add Row');
-        }
+    // all funciotn
+    const hendelOpenModal= ()=>{
+        setmodalAddPost(true)
         setfetch_api('POST')
     }
 
-
+    const closeMapHandler = () => {
+        setmodalEdit(false) 
+        setmodalAddPost(false);
+    }
 
     const list = allRow.map((itemRow,index)=>{
         return (
@@ -49,8 +52,26 @@ function ListTable({allRow,setAllRow}) {
    
   return (
     <React.Fragment>
-        <E.Root onClick={hendelToggle}>{descriptionButton}</E.Root>
-        {modalAddPost &&<Modal fetch_api={fetch_api} allRow={allRow} descriptionButtonInternal={descriptionButtonInternal}></Modal>}
+        <Button onClick={hendelOpenModal}>ADD ROW</Button>
+        <ModalMain
+          show={modalAddPost}
+          onCancel={closeMapHandler}
+          header={'Post New Row in table'}
+          contentClass="modal-content"
+          footerClass="modal-actions"
+          footer={
+            <Button inverse onClick={closeMapHandler}>CLOSE</Button>
+         }
+          content= {
+        <Modalsec 
+            fetch_api={fetch_api} 
+            setmodalEdit={setmodalEdit} 
+            allRow={allRow} 
+            setAllRow={setAllRow}
+            descriptionButtonInternal={descriptionButtonInternal}>
+        </Modalsec>
+        }
+        />
         <table className="table table-sm">
             <thead>
                 <tr>
@@ -67,7 +88,23 @@ function ListTable({allRow,setAllRow}) {
                 {list}
             </tbody>
         </table>
-        {modalEdit && (<Modal obgRowTable={obgRowTable} fetch={fetch} setmodalEdit={setmodalEdit} allRow={allRow} descriptionButtonInternal={descriptionButtonInternal}></Modal>)}
+        <ModalMain
+          show={modalEdit}
+          onCancel={closeMapHandler}
+          header={'Edit Row in table'}
+          contentClass="modal-content"
+          footerClass="modal-actions"
+          footer={<Button inverse  onClick={closeMapHandler}>CLOSE</Button>}
+          content= {
+        <Modalsec 
+            setfetch_api={'PUT'}
+            obgRowTable={obgRowTable} 
+            fetch_api={fetch_api} 
+            setmodalEdit={setmodalEdit} 
+            allRow={allRow}>
+        </Modalsec>
+          }
+        />
     </React.Fragment>
   )
 }
