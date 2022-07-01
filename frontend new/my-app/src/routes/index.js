@@ -1,12 +1,14 @@
-import { lazy, Suspense } from 'react';
+import React,{ lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
+
 import NoMatch from '../pages/Nomatch';
 import { Layout } from '../components';
-
 const Home = lazy(() => import('../pages/Home'));
 const Register = lazy(() => import('../pages/Register'));
 const Login = lazy(() => import('../pages/login'));
 const Table = lazy(() => import('../pages/Table'));
+
+
 
 
 const AppRoutes = () => (
@@ -27,6 +29,7 @@ const AppRoutes = () => (
       <Route path="*" element={<NoMatch/>} />
     </Route>
   </Routes>
+
 )
 
 export default AppRoutes;

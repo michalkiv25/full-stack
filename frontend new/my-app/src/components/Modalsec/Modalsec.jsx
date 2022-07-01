@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext,useState,useCallback} from 'react';
 
 
 // import from project
@@ -19,6 +19,7 @@ import { AuthContext } from '../../context/auth-context'
 function Modal({setmodalEdit,allRow,descriptionButtonInternal,fetch_api,obgRowTable,setAllRow}) {
     const titleButton = descriptionButtonInternal ? 'Add': 'Edit';
     const auth = useContext(AuthContext);
+
 
     const {
         isLoading,
@@ -57,27 +58,31 @@ function Modal({setmodalEdit,allRow,descriptionButtonInternal,fetch_api,obgRowTa
         false
       );
 
-
+      if( fetch_api === 'POST') {
+        console.log(555)
+        const URL=  'http://localhost:3000/api/register/table';
+    } else {
+        const URL=  `http://localhost:3000/api/register/table/${auth.userId}`;
+    }
     const addUserHandler =async (event)=>{
         event.preventDefault();
-        console.log(formState.inputs); // send this to the backend!
-        console.log(auth)
         try {
-                await sendRequest (
-                    'http://localhost:3000/api/register/table', 
-                    fetch_api,
-                    JSON.stringify({
-                        firstName: formState.inputs.firstName.value,
-                        LastName: formState.inputs.lastName.value,
-                        email:  formState.inputs.email.value,
-                        gender: formState.inputs.gender.value,
-                        status: formState.inputs.status.value,
-                        // image:formState.inputs.image.value,
-                        nameCreate: '62bd5e1f6069ccab360d7fe9',
-                    }),
-                    { 'Content-Type': 'application/json' }
-                    );
-            
+            await sendRequest (
+                'http://localhost:3000/api/register/table', 
+                fetch_api,
+                JSON.stringify({
+                    // send this to the backend!
+                    firstName: formState.inputs.firstName.value,
+                    LastName: formState.inputs.lastName.value,
+                    email:  formState.inputs.email.value,
+                    gender: formState.inputs.gender.value,
+                    status: formState.inputs.status.value,
+                    // image:formState.inputs.image.value,
+                    nameCreate: auth.userId,
+                }),
+                { 'Content-Type': 'application/json' }
+                );
+                
         } catch (err) {
             console.log(err)
         }

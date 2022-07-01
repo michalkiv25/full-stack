@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom'; //In react-router-dom v6 useHistory() is replaced by useNavigate().
 import { AuthContext } from '../../context/auth-context';
 
+
 //Manages the state of the Register- Custom input
 
 toast.configure() //notification error form input
@@ -52,6 +53,7 @@ const useRegister = ()=>{
       const registerPost= async ()=>{
         const data  = await axios.post(URL, addRegister);
         auth.login(data.data._id);
+        console.log('id', data.data._id)
         if(!data) {
           return
         }else{

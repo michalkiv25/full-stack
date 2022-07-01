@@ -49,7 +49,7 @@ function Table() {
 
     return (
         <div >
-            {!isLoading && <ListTable allRow={allRow} setAllRow={setAllRow}></ListTable>}
+            {!isLoading && allRow && <ListTable allRow={allRow} setAllRow={setAllRow}></ListTable>}
             {error && <p className='center'> {error}</p>}
         </div>
     )

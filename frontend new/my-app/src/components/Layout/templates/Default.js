@@ -1,14 +1,36 @@
-import React from 'react';
+import React,  { useState, useCallback }  from 'react';
 import { Outlet } from 'react-router-dom';
 import { GlobalStyle } from '../../../theme';
 import Container from '../../Container';
 import Header from '../../Header';
 import E from './Default.style';
+import { AuthContext } from '../../../context/auth-context';
+
 
 const DefaultLayout = () => {
-const title= 'The site was built by Michaela Noam'
+const title= 'The site was built by Michaela Noam';
+const [isLoggedIn, setIsLoggedIn] = useState(false);
+const [userId, setUserId] = useState(false);
+
+const login = useCallback(uid => {
+  setIsLoggedIn(true);
+  setUserId(uid);
+}, []);
+
+const logout = useCallback(() => {
+  setIsLoggedIn(false);
+  setUserId(null);
+}, []);
 
   return (
+    <AuthContext.Provider
+    value={{
+      isLoggedIn: isLoggedIn,
+      userId: userId,
+      login: login,
+      logout: logout
+    }}
+  >
     <E.Root>
       <GlobalStyle></GlobalStyle>
       <Header header={title}/>
@@ -16,6 +38,8 @@ const title= 'The site was built by Michaela Noam'
         <Outlet />
       </Container>
     </E.Root>
+    </AuthContext.Provider>
+
   )
 }
 export default DefaultLayout;

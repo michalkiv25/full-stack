@@ -27,7 +27,6 @@ export const useHttp = () => {
       // }
       setIsLoading(false);
       return responseBackendMes;
-
     } catch (err) {
       setError(err.message || 'Something went wrong!');
       setIsLoading(false);
