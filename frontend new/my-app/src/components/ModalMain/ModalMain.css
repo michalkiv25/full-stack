@@ -1,6 +1,6 @@
 .modal-enter-done {
-    position:fixed;
-    top: 10vh;
+    position:absolute; /* fixed */
+    top: 8vh;
     left: 50%;
     transform: translate(-49%, 7%);
     width: 50%;
@@ -11,6 +11,11 @@
   
   .modal__content {
     padding: 1rem 0.5rem;
+  }
+
+  .contentError_className {
+    text-align: center;
+    font-size: 1.3rem;
   }
   
   .modal__footer {

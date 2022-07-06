@@ -7,6 +7,7 @@ const inputReducer = (state, action) => {
 //action- type-CHANGE, after press on button TOUCH
 //        val- Tap the keyboard
 //        validators- Before the prop passed
+
   switch (action.type) {
     case 'CHANGE':
       return {
@@ -56,25 +57,41 @@ const Input = (props) => {
     });
   };
 
-    const element =
-    props.element === 'input' ? (
-      <input
-        id={props.id}
-        type={props.type}
-        placeholder={props.placeholder}
-        onChange={changeHandler}
-        onBlur={touchHandler}
-        value={inputState.value}
-      />
-    ) : (
-      <textarea
-        id={props.id}
-        rows={props.rows || 3}
-        onChange={changeHandler}
-        onBlur={touchHandler}
-        value={inputState.value}
-      />
-    );
+  let element; 
+    if (props.element === 'input'){
+      element = 
+        <input
+          id={props.id}
+          type={props.type}
+          placeholder={props.placeholder || ""}
+          onChange={changeHandler}
+          onBlur={touchHandler}
+          value={inputState.value}
+        />
+    } else if (props.element === 'textarea') {
+      element = 
+        <textarea
+          id={props.id}
+          rows={props.rows || 3}
+          onChange={changeHandler}
+          onBlur={touchHandler}
+          value={inputState.value}
+        />
+    } else {
+      element = 
+        <select id={props.id}        
+          onChange={changeHandler}
+          onBlur={touchHandler}
+         >
+          <option value={inputState.value}>--Please choose an option--</option>
+          <option value={props.elementValueOne}>{props.elementValueOne}</option>
+          <option value={props.elementValueTwo}>{props.elementValueTwo}</option>
+        </select>
+        
+    }
+    
+ 
+
 
   return (
     <div className={`form-control ${!inputState.isValid && inputState.isTouched &&

@@ -48,7 +48,6 @@ function ItemTable({
           deleteRow(itemId)
       }
   }
-    
   return (
     <React.Fragment>
           <tr>
@@ -56,9 +55,9 @@ function ItemTable({
             <td>{itemRow.LastName}</td>
             <td>{itemRow.email}</td>
             <td>{itemRow.gender}</td>
-            <td>{itemRow.status}</td>
+            <td>{itemRow.status}</td >
             <td>
-              <img src={itemRow.image} alt={itemRow.firstName}></img>
+              <E.Img src={`http://localhost:3000/${itemRow.image}`}  alt={itemRow.firstName}></E.Img>
             </td>        
             <E.Td>
               <Button icon onClick={() => edit(itemRow.id)}>

@@ -5,7 +5,6 @@ import Header from '../Header';
 import './ModalMain.css';
 
 const ModalOverlay = props => {
-
     return (
         <>
             <Header 
@@ -14,7 +13,7 @@ const ModalOverlay = props => {
                 sizeHeder= "50px" 
                 {...props} >
             </Header> 
-            <div className= "modal__content">
+            <div className= {`modal__content ${props.contentError}`}>
                 {props.content}
             </div>
             <footer className={`modal__footer ${props.footerClass}`}>
@@ -33,7 +32,8 @@ const BodyModal = (props) => {
             mountOnEnter
             unmountOnExit
             classNames="modal"
-            timeout={100}>
+            timeout={100}
+        >
         <div>
         <ModalOverlay {...props} />
         </div>

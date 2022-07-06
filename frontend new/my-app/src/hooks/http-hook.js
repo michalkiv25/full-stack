@@ -6,27 +6,24 @@ export const useHttp = () => {
   const [error, setError] = useState(null);
 
   const sendRequest = useCallback(async (url, method = 'GET', body = null, headers = {}) => {
-    // requestConfig = url
-    // applyData= method
     setIsLoading(true);
     setError(null);
+
     try {
       const response = await fetch(url, {
         method,
         body,
         headers,
       });
-
       const responseBackendMes = await response.json();
 
       if (!response.ok) {
         throw new Error('Request failed!');
       }
-      // else {
-      //   alert(responseBackendMes.message);
-      // }
+
       setIsLoading(false);
       return responseBackendMes;
+
     } catch (err) {
       setError(err.message || 'Something went wrong!');
       setIsLoading(false);
@@ -35,10 +32,15 @@ export const useHttp = () => {
 
   }, []);
 
+  const clearError = () => {
+    setError(null);
+  };
+
   return {
     isLoading,
     error,
     sendRequest,
+    clearError
   };
 };
 

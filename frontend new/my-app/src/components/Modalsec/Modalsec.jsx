@@ -1,5 +1,5 @@
 import React, {useContext,useState,useCallback} from 'react';
-
+import { useParams } from 'react-router-dom';
 
 // import from project
 import E from './Modalsec.style';
@@ -13,13 +13,17 @@ import {
 import { Input } from '..';
 import { useForm } from '../../hooks/form-hook';
 import { useHttp } from '../../hooks/http-hook';
-import { AuthContext } from '../../context/auth-context'
+import { AuthContext } from '../../context/auth-context';
+import {ImageUpload} from '..'
 
 
-function Modal({setmodalEdit,allRow,descriptionButtonInternal,fetch_api,obgRowTable,setAllRow}) {
+
+
+function Modal({setmodalEdit,allRow,descriptionButtonInternal,fetch_api,obgRowTable,setAllRow,onCancel}) {
     const titleButton = descriptionButtonInternal ? 'Add': 'Edit';
     const auth = useContext(AuthContext);
-
+  //   const userId = useParams().userId;
+  // console.log(userId)
 
     const {
         isLoading,
@@ -50,39 +54,38 @@ function Modal({setmodalEdit,allRow,descriptionButtonInternal,fetch_api,obgRowTa
             value: '',
             isValid: false
           },
-        //   image : {
-        //     value: '',
-        //     isValid: false
-        //   }
+          image : {
+            value: '',
+            isValid: false
+          }
         },
         false
       );
-
+        let URL;
       if( fetch_api === 'POST') {
-        console.log(555)
-        const URL=  'http://localhost:3000/api/register/table';
-    } else {
-        const URL=  `http://localhost:3000/api/register/table/${auth.userId}`;
-    }
+         URL=  'http://localhost:3000/api/register/table';
+      } else {
+         URL=  `http://localhost:3000/api/register/table/${auth.userId}`;
+      }
     const addUserHandler =async (event)=>{
         event.preventDefault();
         try {
-            await sendRequest (
-                'http://localhost:3000/api/register/table', 
+          const formData = new FormData();
+          formData.append('firstName', formState.inputs.firstName.value);
+          formData.append('LastName', formState.inputs.lastName.value);
+          formData.append('email', formState.inputs.email.value);
+          formData.append('gender', formState.inputs.gender.value);
+          formData.append('status', formState.inputs.status.value);
+          formData.append('nameCreate', auth.userId);
+          formData.append('image', formState.inputs.image.value);
+            const sendRequestBack = await sendRequest (
+                URL,
                 fetch_api,
-                JSON.stringify({
-                    // send this to the backend!
-                    firstName: formState.inputs.firstName.value,
-                    LastName: formState.inputs.lastName.value,
-                    email:  formState.inputs.email.value,
-                    gender: formState.inputs.gender.value,
-                    status: formState.inputs.status.value,
-                    // image:formState.inputs.image.value,
-                    nameCreate: auth.userId,
-                }),
-                { 'Content-Type': 'application/json' }
-                );
-                
+                formData
+            );
+            if(sendRequestBack){
+              onCancel()
+            }
         } catch (err) {
             console.log(err)
         }
@@ -99,7 +102,7 @@ function Modal({setmodalEdit,allRow,descriptionButtonInternal,fetch_api,obgRowTa
                 validators={[VALIDATOR_REQUIRE()]}
                 errorText="Please enter a valid firstName."
                 onInput={inputHandler}
-                >
+            >
             </Input>
             <Input
                 type='text' 
@@ -110,7 +113,7 @@ function Modal({setmodalEdit,allRow,descriptionButtonInternal,fetch_api,obgRowTa
                 validators={[VALIDATOR_REQUIRE()]}
                 errorText="Please enter a valid lastName."
                 onInput={inputHandler}
-                >
+            >
             </Input>
             <Input
                 type='email' 
@@ -121,40 +124,39 @@ function Modal({setmodalEdit,allRow,descriptionButtonInternal,fetch_api,obgRowTa
                 validators={[VALIDATOR_REQUIRE(),VALIDATOR_EMAIL()]}
                 errorText="Please enter a valid email."
                 onInput={inputHandler}
-                >
+            >
             </Input>
             <Input
                 type='text' 
                 id="gender"
-                element="input"
+                elementValueOne="Male"
+                elementValueTwo="Female"                
                 label="gender"
                 initialValue={obgRowTable === undefined ? '' : obgRowTable.gender}
                 validators={[VALIDATOR_REQUIRE()]}
                 errorText="Please enter a valid gender."
                 onInput={inputHandler}
-                >
+            >
             </Input>
             <Input
                 type='text' 
                 id="status"
-                element="input"
+                elementValueOne="True"
+                elementValueTwo="False"
                 label="status"
                 initialValue={obgRowTable === undefined ? '' : obgRowTable.status}
                 validators={[VALIDATOR_MINLENGTH(3)]}
                 errorText="Please enter a valid status."
                 onInput={inputHandler}
-                >
+            >
             </Input>
-            {/* <Input
-                type='file' 
-                id="image"
-                element="input"
-                label="image"
-                validators={[VALIDATOR_FILE()]}
-                errorText="Please enter a valid image."
-                onInput={inputHandler}
-                >
-            </Input> */}
+            <ImageUpload
+              id="image"
+              onInput={inputHandler}
+              errorText="Please provide an image."
+              center='center'
+            />
+            <p>{error}</p>
             <Button type="submit" >{titleButton}</Button>
         </E.Root>
   )

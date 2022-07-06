@@ -1,7 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
+
 import Empty from './templates/Empty';
 import DefaultLayout from './templates/Default';
-import PropTypes from 'prop-types';
 
 
 const renderTemplate = (template) => {

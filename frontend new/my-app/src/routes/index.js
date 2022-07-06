@@ -9,11 +9,9 @@ const Login = lazy(() => import('../pages/login'));
 const Table = lazy(() => import('../pages/Table'));
 
 
-
-
 const AppRoutes = () => (
   <Routes>
-    <Route element={<Layout />}>
+    <Route element={<Layout template="default"/>}>
       <Route path="/" element={<Suspense fallback={<>...</>}><Home /></Suspense>} />
     </Route>
     <Route element={<Layout/>}>

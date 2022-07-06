@@ -9,6 +9,8 @@ const {User,schemavalidation} = require("../modals/User");
 const HttpError = require("../modals/http-error");
 const { CreateToken } = require('./auto.controller');
 const Response = require('../handlers/response');
+// const { validationResult } = require('express-validator'); //When using express's chek
+
 
 
 

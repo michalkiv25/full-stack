@@ -8,7 +8,6 @@ const helmet = require('helmet');
 const routes = require('../../routes');
 
 
-
 const app = express();
 
 //Middleware

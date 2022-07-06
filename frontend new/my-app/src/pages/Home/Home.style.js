@@ -9,7 +9,7 @@ const Root = styled.div`
 `;
 
 const Ul = styled.ul`
-  padding: ${(p) => toPx(p.theme.spacing * 1)} ;
+  padding: ${(p) => toPx(p.theme.spacing * 1.5)} ;
 `;
 
 

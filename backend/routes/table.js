@@ -4,6 +4,8 @@ const router = express.Router();
 const tableControllres = require("../controllers/table_controllres.js");
 const auth = require("../middleware/auth");
 const fileUpload= require("../middleware/file-upload");
+// const { check } = require('express-validator'); option for valid
+
 
 router.get("/table",tableControllres.getAllTable);
 

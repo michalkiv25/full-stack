@@ -1,8 +1,8 @@
 import React,{useEffect, useState} from 'react';
-import { useNavigate } from 'react-router-dom'; //In react-router-dom v6 useHistory() is replaced by useNavigate().
 
 import ListTable from './ListTable';
 import { useHttp } from '../../hooks/http-hook'
+import { LoadingSpinner, ModalError } from '../../components';
 
 
 const changeData= (data) => {
@@ -14,6 +14,7 @@ const changeData= (data) => {
             firstName:row.firstName,
             gender:row.gender,
             status:row.status,
+            image:row.image,
             nameCreate:row.nameCreate,
             _id:row._id
         }
@@ -27,7 +28,8 @@ function Table() {
     const {
         isLoading,
         error,
-        sendRequest
+        sendRequest,
+        clearError
     } =
     useHttp();    
 
@@ -48,9 +50,11 @@ function Table() {
       }, [sendRequest]);
 
     return (
-        <div >
+        <div>
+            <ModalError error={error} onClear={clearError} />
             {!isLoading && allRow && <ListTable allRow={allRow} setAllRow={setAllRow}></ListTable>}
-            {error && <p className='center'> {error}</p>}
+            {isLoading && (<div className="center"><LoadingSpinner/></div>)}
+            {/* {error && <p className='center'> {error}</p>} */}
         </div>
     )
 }

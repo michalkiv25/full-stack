@@ -16,7 +16,7 @@ function ListTable({allRow,setAllRow}) {
 
     const [obgRowTable,setObgRowTable] = useState({}) //objEdit
 
-    if(!allRow ){ // allRow.length ===0
+    if(allRow.length === 0 ){ 
         return(
             <>
                 <p className='center'>No table found</p>
@@ -35,7 +35,6 @@ function ListTable({allRow,setAllRow}) {
         setmodalEdit(false) 
         setmodalAddPost(false);
     }
-
     const list = allRow.map((itemRow,index)=>{
         return (
             <ItemTable 
@@ -61,16 +60,17 @@ function ListTable({allRow,setAllRow}) {
           footerClass="modal-actions"
           footer={
             <Button inverse onClick={closeMapHandler}>CLOSE</Button>
-         }
+          }
           content= {
-        <Modalsec 
-            fetch_api={fetch_api} 
-            setmodalEdit={setmodalEdit} 
-            allRow={allRow} 
-            setAllRow={setAllRow}
-            descriptionButtonInternal={descriptionButtonInternal}>
-        </Modalsec>
-        }
+            <Modalsec 
+                fetch_api={fetch_api} 
+                onCancel={closeMapHandler}
+                setmodalEdit={setmodalEdit} 
+                allRow={allRow} 
+                setAllRow={setAllRow}
+                descriptionButtonInternal={descriptionButtonInternal}>
+            </Modalsec>
+         }
         />
         <table className="table table-sm">
             <thead>
@@ -96,13 +96,13 @@ function ListTable({allRow,setAllRow}) {
           footerClass="modal-actions"
           footer={<Button inverse  onClick={closeMapHandler}>CLOSE</Button>}
           content= {
-        <Modalsec 
-            setfetch_api={'PUT'}
-            obgRowTable={obgRowTable} 
-            fetch_api={fetch_api} 
-            setmodalEdit={setmodalEdit} 
-            allRow={allRow}>
-        </Modalsec>
+            <Modalsec 
+                setfetch_api={'PUT'}
+                obgRowTable={obgRowTable} 
+                fetch_api={fetch_api} 
+                setmodalEdit={setmodalEdit} 
+                allRow={allRow}>
+            </Modalsec>
           }
         />
     </React.Fragment>

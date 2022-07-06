@@ -1,10 +1,13 @@
 import React,  { useState, useCallback }  from 'react';
 import { Outlet } from 'react-router-dom';
+
 import { GlobalStyle } from '../../../theme';
 import Container from '../../Container';
 import Header from '../../Header';
 import E from './Default.style';
 import { AuthContext } from '../../../context/auth-context';
+import Navbar from '../../../pages/Navbar';
+
 
 
 const DefaultLayout = () => {
@@ -33,6 +36,7 @@ const logout = useCallback(() => {
   >
     <E.Root>
       <GlobalStyle></GlobalStyle>
+      <Navbar></Navbar>
       <Header header={title}/>
       <Container>
         <Outlet />
