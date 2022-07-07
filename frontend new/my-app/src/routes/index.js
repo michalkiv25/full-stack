@@ -27,11 +27,10 @@ const AppRoutes = () => (
     <Route element={<Layout header="Add row-table"/>}>
       <Route path="/table/:id" element={<Suspense fallback={<>...</>}><AddRow/></Suspense>} />
     </Route>
-    <Route element={<Layout template="empty" />}>
+    <Route element={<Layout template="empty"/>}>
       <Route path="*" element={<NoMatch/>} />
     </Route>
   </Routes>
-
 )
 
 export default AppRoutes;

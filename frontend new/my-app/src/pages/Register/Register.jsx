@@ -53,7 +53,7 @@ function Register() {
 
       if (responseData){
         navigate('/login/add');
-        auth.login(responseData._id);
+        auth.login(responseData._id,responseData.token);
       } 
 
     } catch (err) {

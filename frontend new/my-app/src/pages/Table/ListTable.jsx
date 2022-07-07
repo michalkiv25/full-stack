@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 
 import ItemTable from './ItemTable';
-// import '../../App.css';
+import '../../App.css';
 import Modalsec from '../../components/Modalsec';
 import { ModalMain } from '../../components';
 import { Button } from './../../components';

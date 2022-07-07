@@ -91,8 +91,21 @@ const registerPost =async (req,res,next) =>{
 
       try{
         const save_user= await userNew.save();
+        const token = jwt.sign({ //gey token
+          id: userNew._id,
+          email: userNew.email,
+      },
+      config.get("jwtKeyToken"),
+      {
+          expiresIn: "1H" //Corrected time
+      });
         // const response = new Response({ success: true, save_user });
-        res.status(httpStatus.CREATED).json(_.pick(save_user,["email", "date", "_id"]))//Select keys to send from the object to the user //201
+        // res.status(httpStatus.CREATED).json(_.pick(save_user,["email", "date", "_id"]))//Select keys to send from the object to the user //201
+        res.status(httpStatus.CREATED).json({
+          email:save_user.email,
+          id:save_user._id, 
+          token:token
+        })
         // .json(response);
       }
       catch(err) {

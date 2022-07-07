@@ -7,28 +7,18 @@ import Header from '../../Header';
 import E from './Default.style';
 import { AuthContext } from '../../../context/auth-context';
 import MainNav from '../../../pages/Navigation';
+import { useAuth } from '../../../hooks/auth-hook'
 
 
 
 const DefaultLayout = (props) => {
-const [isLoggedIn, setIsLoggedIn] = useState(false);
-const [userId, setUserId] = useState(false);
-
-
-const login = useCallback(uid => {
-  setIsLoggedIn(true);
-  setUserId(uid);
-}, []);
-
-const logout = useCallback(() => {
-  setIsLoggedIn(false);
-  setUserId(null);
-}, []);
+  const { token, login, logout, userId } = useAuth();
 
   return (
     <AuthContext.Provider
     value={{
-      isLoggedIn: isLoggedIn,
+      isLoggedIn: !!token,
+      token: token,
       userId: userId,
       login: login,
       logout: logout

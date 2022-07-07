@@ -1,6 +1,5 @@
 // import from project
 const { mongoose } = require("../src/config/dataMongoose"); //import db
-// const HttpError= require("../modals/http-error");
 const app = require('./config/express');
 
 
