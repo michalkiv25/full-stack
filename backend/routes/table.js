@@ -9,7 +9,7 @@ const fileUpload= require("../middleware/file-upload");
 
 router.get("/table",tableControllres.getAllTable);
 
-// router.use(auth); //Middlever for all the routs below Either write or in the middle
+router.use(auth); //Middlever for all the routs below Either write or in the middle
 
 router
     .route("/table/:id")

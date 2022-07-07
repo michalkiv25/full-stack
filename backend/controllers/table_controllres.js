@@ -38,7 +38,6 @@ exports.getOneRowTable=  async (req,res,next)=>{  //Get One row table
 
 exports.tablePost =  async (req,res,next)=>{ 
     const {firstName, LastName, email, gender, status, nameCreate} = req.body; //Distraction parametrs of table user
-    console.log(nameCreate)
 
     //Lets Validate 
     const {error} = schemavalidation(req.body)
@@ -85,11 +84,20 @@ exports.deletePost = async (req,res,next)=>{ //Delete a row that the user select
     const tableIdUser = req.params.tableId;
     try{
         // Table= Table.filter(item => item.id !== tableIdUser)//Another option
-        const rowFromTableDelete = await Table.findOneAndDelete( tableIdUser);// find && delete
+        const rowFromTableDelete = await Table.findOneAndDelete( tableIdUser).populate('nameCreate');// find && delete
         if (!rowFromTableDelete) {
             // return res.status(404).send('The row with the given ID was not found.');
             throw new new HttpError("Could not find row for the provided",404)
         }
+
+        if (rowFromTableDelete.nameCreate.id !== req.userData.userId) {//nameCreate at row == nameCreate from token
+            const error = new HttpError(
+            'You are not allowed to delete this row.',
+            401
+            );
+            return next(error);
+        }
+
         const imagePath = rowFromTableDelete.image; //delete from backend
         fs.unlink(imagePath, err => {
             console.log(err);
@@ -126,10 +134,16 @@ exports.updateRowTable = async (req,res,next)=>{
         // return next(new HttpError("Row not found",404))
     }
 
+    if (foundRow.nameCreate.toString() !== req.userData.userId) { //nameCreate at row == nameCreate from token
+        const error = new HttpError('You are not allowed to edit this row.', 401);
+        return next(error);
+    }
+
     try{
         const updateRowFromUser= await Table.updateOne({ _id: tableIdUser }, req.body);
-        console.log('updateRowFromUser', updateRowFromUser)
         if(!updateRowFromUser) return res.status(404).send('The row with the given ID was not found.');
+        // foundRow.firstName= req.body.firstName
+        //  await foundRow.save();
         res.status(200).json({
             message: 'Row Updated'
         })
@@ -140,8 +154,6 @@ exports.updateRowTable = async (req,res,next)=>{
 
     }  
 }
-
-
 
 
 // exports.getAllTable = getAllTable;

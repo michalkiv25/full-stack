@@ -15,6 +15,8 @@ const checkAuth = (req, res, next) => {
     return res.status(401).send("Access denied. No token provided");
     try {
         const decoded = jwt.verify(token, config.get("jwtKeyToken"));
+        req.userData = { userId: decoded.id }; // id of nameCreate
+        console.log(req.userData.userId)
         next();
     } catch(error) {
         res.status(401).json({

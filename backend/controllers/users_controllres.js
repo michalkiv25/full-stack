@@ -12,9 +12,6 @@ const Response = require('../handlers/response');
 // const { validationResult } = require('express-validator'); //When using express's chek
 
 
-
-
-
 const loginpost =async (req,res,next) =>{
 
     const {email,password} = req.body; //Distraction parametr of user
