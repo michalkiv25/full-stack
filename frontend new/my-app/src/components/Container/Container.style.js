@@ -4,7 +4,7 @@ import { toPx } from '../../helpers';
 
 const Root = styled.div`
   width: 100%;
-  padding:  ${(p) => toPx(p.theme.spacing * 1)} ;
+  padding:  ${(p) => toPx(p.theme.spacing * 1)};
   margin: 20px auto;
 
   @media (min-width: ${(p) => toPx(p.theme.breakpoints.sm)}) {

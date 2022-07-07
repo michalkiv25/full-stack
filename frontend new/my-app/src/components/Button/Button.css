@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 5px;
+  margin: 5px;
 }
 
 .button {
@@ -80,4 +80,31 @@
   
   .button--big {
     font-size: 1.5rem;
+  }
+
+  .button--header {
+    background:white;
+    color: #00BFFF;
+    border:none;
+  }
+
+
+  .button--header:hover {
+    background:white;
+    color: #1E90FF;
+    border:none;
+  }
+
+  .button--buttonAdd {
+    margin-top: 0;
+    margin-bottom: 50px;
+    font-size: 1.5rem;
+    background-color: RoyalBlue;
+    border: 1px solid RoyalBlue;
+  }
+
+  .button--buttonAdd:hover{
+    color:RoyalBlue;
+    background-color: white;
+    border: 1px solid RoyalBlue;
   }

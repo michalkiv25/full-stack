@@ -11,7 +11,8 @@ const Root = styled.div`
   width: 100%;
   background: ${props => props.headerBackground || "#FFFFFF" };
   color: ${props => props.headerColor || "#663399"};
-  text-shadow: 2px 1px ${props => props.headerColor || "#663399"};;
+  text-shadow: 2px 1px ${props => props.headerColor || "#663399"};
+  margin-top: ${props => props.headerEdit  || "60px"};
 `;
 
 export default {

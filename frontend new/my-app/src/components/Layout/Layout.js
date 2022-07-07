@@ -6,7 +6,7 @@ import Empty from './templates/Empty';
 import DefaultLayout from './templates/Default';
 
 
-const renderTemplate = (template) => {
+const renderTemplate = (template,header,addRow) => {
   let output;
 
   switch (template) {
@@ -15,7 +15,7 @@ const renderTemplate = (template) => {
       break;
 
     default:
-      output = <DefaultLayout />;
+      output = <DefaultLayout header={header} />;
       break;
   }
 
@@ -25,9 +25,10 @@ const renderTemplate = (template) => {
 const Layout = (props) => {
   const {
     template,
+    header,
   } = props;
 
-  return renderTemplate(template);
+  return renderTemplate(template,header);
 }
 
 

@@ -11,6 +11,7 @@ const ModalOverlay = props => {
                 headerColor='#FFFAF0' 
                 headerBackground='#663399' 
                 sizeHeder= "50px" 
+                headerEdit= "0px"
                 {...props} >
             </Header> 
             <div className= {`modal__content ${props.contentError}`}>

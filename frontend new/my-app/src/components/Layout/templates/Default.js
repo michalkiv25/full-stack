@@ -6,14 +6,14 @@ import Container from '../../Container';
 import Header from '../../Header';
 import E from './Default.style';
 import { AuthContext } from '../../../context/auth-context';
-import Navbar from '../../../pages/Navbar';
+import MainNav from '../../../pages/Navigation';
 
 
 
-const DefaultLayout = () => {
-const title= 'The site was built by Michaela Noam';
+const DefaultLayout = (props) => {
 const [isLoggedIn, setIsLoggedIn] = useState(false);
 const [userId, setUserId] = useState(false);
+
 
 const login = useCallback(uid => {
   setIsLoggedIn(true);
@@ -36,10 +36,10 @@ const logout = useCallback(() => {
   >
     <E.Root>
       <GlobalStyle></GlobalStyle>
-      <Navbar></Navbar>
-      <Header header={title}/>
+      <MainNav></MainNav>
+      <Header header={props.header}/>
       <Container>
-        <Outlet />
+        <Outlet/>
       </Container>
     </E.Root>
     </AuthContext.Provider>

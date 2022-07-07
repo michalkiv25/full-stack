@@ -56,7 +56,6 @@ const Input = (props) => {
       type: 'TOUCH'
     });
   };
-
   let element; 
     if (props.element === 'input'){
       element = 

@@ -1,11 +1,11 @@
 import React,{useState} from 'react';
-import { CSSTransition } from 'react-transition-group';
 
 import ItemTable from './ItemTable';
-import '../../App.css';
+// import '../../App.css';
 import Modalsec from '../../components/Modalsec';
 import { ModalMain } from '../../components';
 import { Button } from './../../components';
+import AddRow from '../AddRow';
 
 
 function ListTable({allRow,setAllRow}) {
@@ -28,7 +28,7 @@ function ListTable({allRow,setAllRow}) {
     // all funciotn
     const hendelOpenModal= ()=>{
         setmodalAddPost(true)
-        setfetch_api('POST')
+        // setfetch_api('POST')
     }
 
     const closeMapHandler = () => {
@@ -51,26 +51,13 @@ function ListTable({allRow,setAllRow}) {
    
   return (
     <React.Fragment>
-        <Button onClick={hendelOpenModal}>ADD ROW</Button>
-        <ModalMain
-          show={modalAddPost}
-          onCancel={closeMapHandler}
-          header={'Post New Row in table'}
-          contentClass="modal-content"
-          footerClass="modal-actions"
-          footer={
-            <Button inverse onClick={closeMapHandler}>CLOSE</Button>
-          }
-          content= {
-            <Modalsec 
-                fetch_api={fetch_api} 
-                onCancel={closeMapHandler}
-                setmodalEdit={setmodalEdit} 
-                allRow={allRow} 
-                setAllRow={setAllRow}
-                descriptionButtonInternal={descriptionButtonInternal}>
-            </Modalsec>
-         }
+        <Button onClick={hendelOpenModal} buttonAdd>ADD ROW</Button>
+        <AddRow 
+            modalAddPost={modalAddPost} 
+            closeMapHandler={closeMapHandler}
+            fetch_api={fetch_api}
+            descriptionButtonInternal={descriptionButtonInternal}
+            hendelOpenModal={hendelOpenModal}
         />
         <table className="table table-sm">
             <thead>
@@ -98,10 +85,10 @@ function ListTable({allRow,setAllRow}) {
           content= {
             <Modalsec 
                 setfetch_api={'PUT'}
+                onCancel={closeMapHandler}
                 obgRowTable={obgRowTable} 
                 fetch_api={fetch_api} 
-                setmodalEdit={setmodalEdit} 
-                allRow={allRow}>
+            >
             </Modalsec>
           }
         />

@@ -1,4 +1,7 @@
 import React, { useContext} from 'react';
+import { useNavigate } from 'react-router-dom'; //In react-router-dom v6 useHistory() is replaced by useNavigate().
+import { toast } from 'react-toastify'; //pop up error
+import 'react-toastify/dist/ReactToastify.css';
 
 import { Input } from '../../components';
 import { Button } from '../../components';
@@ -6,10 +9,8 @@ import { useForm } from '../../hooks/form-hook';
 import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH } from '../../utill/validators';
 import { useHttp } from '../../hooks/http-hook'
 import { AuthContext } from '../../context/auth-context';
-import { useNavigate } from 'react-router-dom'; //In react-router-dom v6 useHistory() is replaced by useNavigate().
 // import ErrorModal from '../../components/ModalError/ModalError';
-import { toast } from 'react-toastify'; //pop up error
-import 'react-toastify/dist/ReactToastify.css';
+
 
 
 

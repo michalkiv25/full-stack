@@ -486,10 +486,10 @@ const GlobalStyle = createGlobalStyle`
   a {
     color: ${(p) => p.theme.colors.link};
     text-decoration: none;
-    box-shadow: inset 0 -0.125em 0 0 #fff, inset 0 -0.375em 0 0 ${(p) => hexToRgba(p.theme.colors.link, 20)};
+    // box-shadow: inset 0 -0.125em 0 0 #fff, inset 0 -0.375em 0 0 ${(p) => hexToRgba(p.theme.colors.link, 20)};
 
     &:hover, &:focus {
-      box-shadow: inset 0 -0.125em 0 0 #fff, inset 0 -0.375em 0 0 ${(p) => hexToRgba(p.theme.colors.link, 30)};
+      box-shadow: inset 0 -0.125em 0 0 #fff, inset 0 -0.375em 0 0 ${(p) => hexToRgba(p.theme.colors.link, 10)};
     }
   }
 

@@ -1,149 +1,112 @@
 import React from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; //In react-router-dom v6 useHistory() is replaced by useNavigate().
 
-import useLogin from './useLogin';//Custom Hook
-import "../login/login.css";
+import E from './Login.style';
+import { Input } from '../../components';
+import { Button } from '../../components';
+import { useHttp } from '../../hooks/http-hook';
+import { useForm } from '../../hooks/form-hook';
+import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH } from '../../utill/validators';
 
-//function valid input
-const isNotEmpty = (value) => value.trim() !== ''; // check if have empty
-const isEmail = (value) => value.includes('@'); //check if email valid
+
 
 
 function Login() {
   const navigate = useNavigate(); // const history = useHistory();
-  const URL = "http://localhost:3000/api/login/add"
-  const {
-    value: firstNameValue,
-    isValid: firstNameIsValid,
-    hasError: firstNameHasError,//error
-    valueChangeHandler: firstNameChangeHandler, //onChange
-    inputBlurHandler: firstNameBlurHandler,//onBlur
-    reset: resetFirstName, //Clear input
-  } = useLogin(isNotEmpty); //isNotEmpty- Transferred directly to validateValue
-  const {
-    value: lastNameValue,
-    isValid: lastNameIsValid,
-    hasError: lastNameHasError,
-    valueChangeHandler: lastNameChangeHandler,
-    inputBlurHandler: lastNameBlurHandler,
-    reset: resetLastName,
-  } = useLogin(isNotEmpty);
-  const {
-    value: emailValue,
-    isValid: emailIsValid,
-    hasError: emailHasError,
-    valueChangeHandler: emailChangeHandler,
-    inputBlurHandler: emailBlurHandler, //When you leave the input field
-    reset: resetEmail,
-  } = useLogin(isEmail);
-  const {
-    value: PasswordValue,
-    isValid: PasswordIsValid,
-    hasError: PasswordHasError,
-    valueChangeHandler: PasswordChangeHandler,
-    inputBlurHandler: PasswordBlurHandler,
-    reset: resetPassword,
-  } = useLogin(isNotEmpty);
+  const { sendRequest, clearError, error } = useHttp();
 
-  let formIsValid = false; // default
-
-  if (firstNameIsValid && lastNameIsValid && emailIsValid && PasswordIsValid) {
-    formIsValid = true;
-  }
-
-  const postLogin = {
-    email:emailValue,
-    password:PasswordValue
-  }
+  const [formState, inputHandler] = useForm(
+    {
+      email: {
+        value: '',
+        isValid: false
+      },
+      password: {
+        value: '',
+        isValid: false
+      }
+    },
+    false
+  );
 
   const submitHandler =async event => {
     event.preventDefault();
 
-    if (!formIsValid) {
-      return;
-    }else{
-      const response = await fetch(URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(postLogin),
-      })
-      const responseData = await response.json()
-      if(!response.ok){
-        throw new Error(responseData.message)
-      }
-      if(responseData.token){
-        localStorage.setItem('token', responseData.token)
-        alert('Login successful')
-        navigate('/table')
-      }else {
-        alert('Please check your username and password')
-      }
-   }
-    //Clear input
-    // resetFirstName();
-    // resetLastName();
-    // resetEmail();
-    // resetPassword()
-  };
+    const URL = "http://localhost:3000/api/login/add"
+    try {
+      const responseData = await sendRequest(
+        URL,
+        'POST',
+        JSON.stringify({
+          email: formState.inputs.email.value,
+          password: formState.inputs.password.value
+        }),
+        {
+          'Content-Type': 'application/json'
+        }
+      );
 
-  //style if the value not valid- class in css
-  const firstNameClasses = firstNameHasError ? 'form-control invalid' : 'form-control';
-  const lastNameClasses = lastNameHasError ? 'form-control invalid' : 'form-control';
-  const emailClasses = emailHasError ? 'form-control invalid' : 'form-control';
-  const passwordClasses = emailHasError ? 'form-control invalid' : 'form-control';
+
+
+    } catch (err) {
+      console.log(err)
+      if(error){
+        console.log(error)     
+       }
+    }
+   }
 
   return (
-    <form onSubmit={submitHandler}>
-      <div className='control-group'>
-        <div className={firstNameClasses} >
-          <label htmlFor='name'>First Name</label>
-          <input
+    <E.Root onSubmit={submitHandler}>
+        <div>
+          <Input
             type='text'
-            value={firstNameValue  || ''}
-            onChange={firstNameChangeHandler}
-            onBlur={firstNameBlurHandler}
+            element="input"
+            id="first Name"
+            label="FirstName"
+            validators={[VALIDATOR_MINLENGTH(2)]}
+            errorText="Please enter a valid password, at least 6 characters."
+            onInput={inputHandler}
           />
-          {firstNameHasError && <p className="error-text">Please enter a first name.</p>}
         </div>
-        <div className={lastNameClasses}>
-          <label htmlFor='name'>Last Name</label>
-          <input
+        <div>
+          <Input
             type='text'
-            value={lastNameValue  || ''}
-            onChange={lastNameChangeHandler}
-            onBlur={lastNameBlurHandler}
+            element="input"
+            id="lastName"
+            label="Last Name"
+            validators={[VALIDATOR_MINLENGTH(2)]}
+            errorText="Please enter a valid Last Name, at least 6 characters."
+            onInput={inputHandler}
           />
-          {lastNameHasError && <p className="error-text">Please enter a last name.</p>}
         </div>
-      </div>
-      <div className={emailClasses}>
-        <label htmlFor='name'>E-Mail Address</label>
-        <input
-          type='email'
-          value={emailValue  || ''}
-          onChange={emailChangeHandler}
-          onBlur={emailBlurHandler}
+      <div>
+        <Input
+          type='password'
+          element="input"
+          id="password"
+          label="Password"
+          validators={[VALIDATOR_MINLENGTH(6)]}
+          errorText="Please enter a valid EMAIL, at least 6 characters."
+          onInput={inputHandler}
         />
-        {emailHasError && <p className="error-text">Please enter a valid email address.</p>}
       </div>
-      <div className={passwordClasses}>
-      <label htmlFor='name'> Password</label>
-      <input
-        type='password'
-        value={PasswordValue || ''}
-        onChange={PasswordChangeHandler}
-        onBlur={PasswordBlurHandler}
+      <div>
+      <Input
+        type='email'
+        element="input"
+        id="email"
+        label="E-mail"
+        validators={[VALIDATOR_EMAIL()]}
+        errorText="Please enter a valid EMAIL, at least 6 characters."
+        onInput={inputHandler}
       />
-      {PasswordHasError && <p className="error-text">Please enter a valid Password .</p>}
     </div>
       <div className='form-actions'>
-        <button disabled={!formIsValid}>Submit</button>
+        <Button disabled={!formState.isValid}>Submit</Button>
       </div>
-    </form>
+    </E.Root>
   )
 }
 
-export default Login
+export default Login;

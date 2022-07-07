@@ -1,5 +1,4 @@
-import React, {useContext,useState,useCallback} from 'react';
-import { useParams } from 'react-router-dom';
+import React, {useContext} from 'react';
 
 // import from project
 import E from './Modalsec.style';
@@ -17,16 +16,10 @@ import { AuthContext } from '../../context/auth-context';
 import {ImageUpload} from '..'
 
 
-
-
-function Modal({setmodalEdit,allRow,descriptionButtonInternal,fetch_api,obgRowTable,setAllRow,onCancel}) {
+function Modal({descriptionButtonInternal,fetch_api,obgRowTable,onCancel}) {
     const titleButton = descriptionButtonInternal ? 'Add': 'Edit';
     const auth = useContext(AuthContext);
-  //   const userId = useParams().userId;
-  // console.log(userId)
-
     const {
-        isLoading,
         error,
         sendRequest
         } =
@@ -65,7 +58,7 @@ function Modal({setmodalEdit,allRow,descriptionButtonInternal,fetch_api,obgRowTa
       if( fetch_api === 'POST') {
          URL=  'http://localhost:3000/api/register/table';
       } else {
-         URL=  `http://localhost:3000/api/register/table/${auth.userId}`;
+         URL=  `http://localhost:3000/api/register/table/${obgRowTable._id}`;
       }
     const addUserHandler =async (event)=>{
         event.preventDefault();
